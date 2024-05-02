@@ -1,24 +1,48 @@
 {
   "version": 2,
-  "name": "unixkomora",
-  "builds": [
+  "rewrites": [
     {
-      "src": "main.go",
-      "use": "@vercel/go"
+      "source": "/api/(.*)",
+      "destination": "/cmd/server.go"
     },
     {
-      "src": "web/**/*.html",
-      "use": "@vercel/static"
+      "source": "/about",
+      "destination": "/web/about.html"
     },
     {
-      "src": "web/static/**/*",
-      "use": "@vercel/static"
+      "source": "/contact",
+      "destination": "/web/contact.html"
+    },
+    {
+      "source": "/donate",
+      "destination": "/web/donate.html"
+    },
+    {
+      "source": "/goal",
+      "destination": "/web/goal.html"
+    },
+    {
+      "source": "/links",
+      "destination": "/web/links.html"
+    },
+    {
+      "source": "/",
+      "destination": "/web/index.html"
+    },
+    {
+      "source": "/static/(.*)",
+      "destination": "/web/static/$1"
     }
   ],
-  "routes": [
+  "headers": [
     {
-      "src": "/(.*)",
-      "dest": "/main.go"
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=604800"
+        }
+      ]
     }
   ]
 }
